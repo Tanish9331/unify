@@ -19,6 +19,30 @@ const UnitConverter: React.FC = () => {
   const [selectedType, setSelectedType] = useState<ConversionType>('length');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const tabsRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (tabsRef.current) {
+      observer.observe(tabsRef.current);
+    }
+    
+    return () => {
+      if (tabsRef.current) {
+        observer.unobserve(tabsRef.current);
+      }
+    };
+  }, []);
   
   useEffect(() => {
     const activeTab = tabsRef.current?.querySelector('.active-tab');
@@ -30,30 +54,30 @@ const UnitConverter: React.FC = () => {
   // Enhanced conversion icons with new categories
   const conversionIcons: Record<string, React.ReactNode> = {
     // Common converters
-    length: <Ruler size={18} />,
-    weight: <Weight size={18} />,
-    temperature: <Thermometer size={18} />,
-    volume: <Droplet size={18} />,
-    time: <Clock size={18} />,
-    speed: <Gauge size={18} />,
-    area: <AreaChart size={18} />,
-    pressure: <Gauge size={18} />,
-    currency: <IndianRupee size={18} />,
-    angle: <Compass size={18} />,
-    data: <Database size={18} />,
+    length: <Ruler size={18} className="hover-rotate" />,
+    weight: <Weight size={18} className="hover-bounce" />,
+    temperature: <Thermometer size={18} className="hover-rotate" />,
+    volume: <Droplet size={18} className="hover-bounce" />,
+    time: <Clock size={18} className="hover-rotate" />,
+    speed: <Gauge size={18} className="hover-bounce" />,
+    area: <AreaChart size={18} className="hover-rotate" />,
+    pressure: <Gauge size={18} className="hover-bounce" />,
+    currency: <IndianRupee size={18} className="hover-rotate" />,
+    angle: <Compass size={18} className="hover-rotate" />,
+    data: <Database size={18} className="hover-bounce" />,
     // New categories
-    energy: <Zap size={18} />,
-    power: <Flame size={18} />,
-    force: <Magnet size={18} />,
-    frequency: <Radio size={18} />,
-    fuel: <Fuel size={18} />,
-    resolution: <Image size={18} />,
-    bmi: <User size={18} />,
-    clothing: <Shirt size={18} />,
-    shoe: <Footprints size={18} />,
-    wind: <Wind size={18} />,
-    tire: <TireIcon size={18} />,
-    roman: <Type size={18} />
+    energy: <Zap size={18} className="hover-bounce" />,
+    power: <Flame size={18} className="hover-rotate" />,
+    force: <Magnet size={18} className="hover-bounce" />,
+    frequency: <Radio size={18} className="hover-rotate" />,
+    fuel: <Fuel size={18} className="hover-bounce" />,
+    resolution: <Image size={18} className="hover-rotate" />,
+    bmi: <User size={18} className="hover-bounce" />,
+    clothing: <Shirt size={18} className="hover-rotate" />,
+    shoe: <Footprints size={18} className="hover-bounce" />,
+    wind: <Wind size={18} className="hover-rotate" />,
+    tire: <TireIcon size={18} className="hover-bounce" />,
+    roman: <Type size={18} className="hover-rotate" />
   };
   
   const handleTypeChange = (type: ConversionType) => {
@@ -276,42 +300,42 @@ const UnitConverter: React.FC = () => {
   const searchResults = getAllConverters();
   
   return (
-    <section id="converter" className="py-20 px-6 md:px-12">
+    <section id="converter" className="py-20 px-6 md:px-12 smooth-scroll">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12 space-y-2">
-          <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-medium">
+        <div className={cn("text-center mb-12 space-y-2", isVisible && "stagger-fade-in")}>
+          <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-medium hover-bounce magnetic">
             Powerful & Simple
           </span>
-          <h2 className="text-3xl md:text-4xl font-display font-bold">Advanced Unit Converter</h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-display font-bold slide-up text-shimmer">Advanced Unit Converter</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto slide-in-left">
             Convert between hundreds of different units with precision and ease. Select a category to get started.
           </p>
           
           {/* Enhanced search bar */}
-          <div className="max-w-md mx-auto mt-4 relative">
+          <div className="max-w-md mx-auto mt-4 relative scale-in">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover-bounce" size={18} />
               <input 
                 type="text" 
                 placeholder="Search for a converter..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-full border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                className="w-full pl-10 pr-4 py-2 rounded-full border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all focus-enhanced glass-enhanced"
               />
               {searchTerm && (
                 <button 
                   onClick={() => setSearchTerm('')}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground hover-bounce magnetic ripple"
                 >
-                  <X size={16} />
+                  <X size={16} className="rotate-in" />
                 </button>
               )}
             </div>
             
             {/* Enhanced search results */}
             {searchTerm && searchResults.length > 0 && (
-              <div className="absolute top-full mt-2 left-0 right-0 bg-background border border-input rounded-lg shadow-lg p-2 z-10">
-                <div className="max-h-60 overflow-y-auto">
+              <div className="absolute top-full mt-2 left-0 right-0 bg-background border border-input rounded-lg shadow-lg p-2 z-10 glass-enhanced slide-up">
+                <div className="max-h-60 overflow-y-auto smooth-scroll">
                   {searchResults.map((item, index) => (
                     <button
                       key={`${item.type}-${index}`}
@@ -320,9 +344,9 @@ const UnitConverter: React.FC = () => {
                         handleTypeChange(item.type);
                         setSearchTerm('');
                       }}
-                      className="w-full text-left px-3 py-2 rounded-md hover:bg-muted flex items-center gap-2"
+                      className="w-full text-left px-3 py-2 rounded-md hover:bg-muted flex items-center gap-2 hover-lift magnetic ripple stagger-fade-in"
                     >
-                      {conversionIcons[item.type] || <Calculator size={18} />}
+                      {conversionIcons[item.type] || <Calculator size={18} className="hover-bounce" />}
                       <span>{item.label}</span>
                       <span className="ml-auto text-xs opacity-60 capitalize">
                         {item.category}
@@ -335,31 +359,31 @@ const UnitConverter: React.FC = () => {
           </div>
         </div>
         
-        <div className="mb-8">
+        <div className={cn("mb-8", isVisible && "slide-in-right")}>
           <Tabs defaultValue="common" value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <div className="relative overflow-hidden mb-2">
-              <TabsList className="w-full justify-start overflow-x-auto pb-2 flex gap-2 bg-transparent h-auto">
+            <div className="relative overflow-hidden mb-2 breathe">
+              <TabsList className="w-full justify-start overflow-x-auto pb-2 flex gap-2 bg-transparent h-auto smooth-scroll">
                 <TabsTrigger 
                   value="common"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover-lift magnetic ripple state-transition"
                 >
                   Common
                 </TabsTrigger>
                 <TabsTrigger 
                   value="engineering"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover-lift magnetic ripple state-transition"
                 >
                   Engineering
                 </TabsTrigger>
                 <TabsTrigger 
                   value="digital"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover-lift magnetic ripple state-transition"
                 >
                   Digital
                 </TabsTrigger>
                 <TabsTrigger 
                   value="lifestyle"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover-lift magnetic ripple state-transition"
                 >
                   Lifestyle
                 </TabsTrigger>
@@ -371,20 +395,21 @@ const UnitConverter: React.FC = () => {
               <TabsContent key={category} value={category} className="mt-4">
                 <div 
                   ref={tabsRef}
-                  className="flex flex-wrap gap-2"
+                  className="flex flex-wrap gap-2 stagger-fade-in"
                 >
-                  {filterConverters(category as keyof typeof conversionCategories).map((item) => (
+                  {filterConverters(category as keyof typeof conversionCategories).map((item, index) => (
                     <button
                       key={item.type}
                       onClick={() => handleTypeChange(item.type)}
                       className={cn(
-                        "flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all duration-300",
+                        "flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all duration-500 hover-lift magnetic ripple stagger-fade-in",
                         selectedType === item.type 
-                          ? "bg-primary text-primary-foreground active-tab" 
-                          : "bg-secondary/50 text-secondary-foreground hover:bg-secondary/70"
+                          ? "bg-primary text-primary-foreground active-tab hover-glow" 
+                          : "bg-secondary/50 text-secondary-foreground hover:bg-secondary/70 glass-enhanced"
                       )}
+                      style={{ animationDelay: `${index * 0.1}s` }}
                     >
-                      {conversionIcons[item.type] || <Calculator size={18} />}
+                      {conversionIcons[item.type] || <Calculator size={18} className="hover-bounce" />}
                       <span>{item.label}</span>
                     </button>
                   ))}
@@ -395,20 +420,20 @@ const UnitConverter: React.FC = () => {
         </div>
         
         <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <div className="w-full lg:w-7/12 animate-scale-in">
+          <div className={cn("w-full lg:w-7/12", isVisible && "scale-in card-float")}>
             <ConversionCard
               category={selectedType}
               units={getUnitsForType(selectedType)}
             />
           </div>
           
-          <div className="w-full lg:w-5/12 animate-fade-in" style={{ animationDelay: '100ms' }}>
-            <GlassmorphicCard variant="subtle" hover borderGlow>
+          <div className={cn("w-full lg:w-5/12", isVisible && "slide-in-right")} style={{ animationDelay: '100ms' }}>
+            <GlassmorphicCard variant="subtle" hover borderGlow className="breathe">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">Conversion Tips</h3>
+                <h3 className="text-lg font-medium text-shimmer">Conversion Tips</h3>
                 
                 <div className="space-y-3 text-sm">
-                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover-lift glass-enhanced">
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-1">Quick Tips</h4>
                     <ul className="text-blue-700 dark:text-blue-300 space-y-1 text-xs">
                       <li>• Use keyboard shortcuts for faster conversion</li>
@@ -418,14 +443,14 @@ const UnitConverter: React.FC = () => {
                     </ul>
                   </div>
                   
-                  <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover-lift glass-enhanced">
                     <h4 className="font-medium text-green-800 dark:text-green-200 mb-1">Did You Know?</h4>
                     <p className="text-green-700 dark:text-green-300 text-xs">
                       Hover over unit names to see helpful descriptions and learn more about each measurement.
                     </p>
                   </div>
                   
-                  <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                  <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg hover-lift glass-enhanced">
                     <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-1">New Features</h4>
                     <ul className="text-purple-700 dark:text-purple-300 space-y-1 text-xs">
                       <li>• BMI Calculator</li>
@@ -440,18 +465,18 @@ const UnitConverter: React.FC = () => {
           </div>
         </div>
         
-        <div className="mt-20 glass rounded-xl p-8 animate-slide-up" style={{ animationDelay: '200ms' }}>
+        <div className={cn("mt-20 glass-enhanced rounded-xl p-8", isVisible && "slide-up card-float")} style={{ animationDelay: '200ms' }}>
           <div className="text-center mb-6">
-            <h3 className="text-2xl font-display font-medium mb-2">Enhanced Features</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-2xl font-display font-medium mb-2 text-shimmer">Enhanced Features</h3>
+            <p className="text-muted-foreground slide-in-left">
               Discover all the powerful features that make conversion effortless
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="text-center p-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Settings className="text-primary" size={24} />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 stagger-fade-in">
+            <div className="text-center p-4 hover-lift magnetic">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-bounce breathe">
+                <Settings className="text-primary hover-rotate" size={24} />
               </div>
               <h4 className="text-lg font-medium mb-2">Customizable</h4>
               <p className="text-muted-foreground text-sm">
@@ -459,9 +484,9 @@ const UnitConverter: React.FC = () => {
               </p>
             </div>
             
-            <div className="text-center p-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="text-primary" size={24} />
+            <div className="text-center p-4 hover-lift magnetic">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-bounce breathe">
+                <Clock className="text-primary hover-rotate" size={24} />
               </div>
               <h4 className="text-lg font-medium mb-2">History Tracking</h4>
               <p className="text-muted-foreground text-sm">
@@ -469,9 +494,9 @@ const UnitConverter: React.FC = () => {
               </p>
             </div>
             
-            <div className="text-center p-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="text-primary" size={24} />
+            <div className="text-center p-4 hover-lift magnetic">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-bounce breathe">
+                <Zap className="text-primary hover-bounce" size={24} />
               </div>
               <h4 className="text-lg font-medium mb-2">Quick Shortcuts</h4>
               <p className="text-muted-foreground text-sm">
@@ -479,9 +504,9 @@ const UnitConverter: React.FC = () => {
               </p>
             </div>
             
-            <div className="text-center p-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Info className="text-primary" size={24} />
+            <div className="text-center p-4 hover-lift magnetic">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-bounce breathe">
+                <Info className="text-primary hover-rotate" size={24} />
               </div>
               <h4 className="text-lg font-medium mb-2">Educational</h4>
               <p className="text-muted-foreground text-sm">

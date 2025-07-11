@@ -28,6 +28,31 @@ const DailyChallenge: React.FC = () => {
   const [showReward, setShowReward] = useState(false);
   const [currentReward, setCurrentReward] = useState<Reward | null>(null);
   const [currentChallenge, setCurrentChallenge] = useState<Challenge | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    
+    const element = document.getElementById('daily-challenge');
+    if (element) {
+      observer.observe(element);
+    }
+    
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, []);
   
   // Get a random challenge on every refresh
   const getRandomChallenge = (): Challenge => {
@@ -106,10 +131,10 @@ const DailyChallenge: React.FC = () => {
   // Generate a random reward for the user
   const generateReward = (): Reward => {
     const rewards: Reward[] = [
-      { type: 'kudos', value: 1, label: 'Kudos Badge', icon: <Trophy size={24} className="text-amber-500" /> },
-      { type: 'points', value: 50, label: '50 Points', icon: <Award size={24} className="text-blue-500" /> },
-      { type: 'points', value: 100, label: '100 Points', icon: <Award size={24} className="text-sky-500" /> },
-      { type: 'sticker', value: 1, label: 'Digital Sticker', icon: <Gift size={24} className="text-red-500" /> }
+      { type: 'kudos', value: 1, label: 'Kudos Badge', icon: <Trophy size={24} className="text-amber-500 hover-bounce" /> },
+      { type: 'points', value: 50, label: '50 Points', icon: <Award size={24} className="text-blue-500 hover-rotate" /> },
+      { type: 'points', value: 100, label: '100 Points', icon: <Award size={24} className="text-sky-500 hover-rotate" /> },
+      { type: 'sticker', value: 1, label: 'Digital Sticker', icon: <Gift size={24} className="text-red-500 hover-bounce" /> }
     ];
     
     // The longer the streak, the better the rewards
@@ -202,23 +227,23 @@ const DailyChallenge: React.FC = () => {
   if (!currentChallenge) return null;
   
   return (
-    <div className="w-full max-w-2xl mx-auto mt-16 mb-24">
-      <div className="text-center mb-8">
-        <span className="inline-flex items-center gap-2 py-1 px-3 rounded-full bg-sky-500/10 text-sky-600 dark:bg-sky-400/10 dark:text-sky-400 font-medium text-sm">
-          <Trophy size={16} className="animate-pulse" />
+    <div id="daily-challenge" className="w-full max-w-2xl mx-auto mt-16 mb-24">
+      <div className={cn("text-center mb-8", isVisible && "stagger-fade-in")}>
+        <span className="inline-flex items-center gap-2 py-1 px-3 rounded-full bg-sky-500/10 text-sky-600 dark:bg-sky-400/10 dark:text-sky-400 font-medium text-sm hover-bounce magnetic">
+          <Trophy size={16} className="animate-pulse hover-rotate" />
           Conversion Challenge
         </span>
-        <h3 className="text-2xl font-display font-bold mt-2 mb-1">Test Your Conversion Skills!</h3>
-        <p className="text-muted-foreground">New challenge every time</p>
+        <h3 className="text-2xl font-display font-bold mt-2 mb-1 text-shimmer">Test Your Conversion Skills!</h3>
+        <p className="text-muted-foreground slide-in-left">New challenge every time</p>
       </div>
       
-      <div className="glass p-6 rounded-xl">
+      <div className={cn("glass-enhanced p-6 rounded-xl hover-lift card-float", isVisible && "scale-in")}>
         <div className="flex items-center justify-between mb-4">
           <div className="text-sm font-medium flex items-center gap-2">
             <span>Current Streak: {streak} {streak > 0 && '🔥'}</span>
             {totalPoints > 0 && (
-              <span className="ml-2 flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full text-xs">
-                <Award size={14} /> {totalPoints} pts
+              <span className="ml-2 flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full text-xs hover-bounce magnetic">
+                <Award size={14} className="hover-rotate" /> {totalPoints} pts
               </span>
             )}
           </div>
@@ -227,19 +252,19 @@ const DailyChallenge: React.FC = () => {
           </div>
         </div>
         
-        <div className="text-lg font-medium mb-6 text-center">
+        <div className="text-lg font-medium mb-6 text-center slide-up">
           {currentChallenge.question}
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex gap-4">
+          <div className="flex gap-4 slide-in-left">
             <input
               type="number"
               step="any"
               value={userGuess}
               onChange={(e) => setUserGuess(e.target.value)}
               placeholder="Enter your answer"
-              className="flex-1 px-4 py-2 rounded-lg bg-background border focus:ring-2 focus:ring-sky-500 outline-none"
+              className="flex-1 px-4 py-2 rounded-lg bg-background border focus:ring-2 focus:ring-sky-500 outline-none focus-enhanced glass-enhanced state-transition"
               disabled={hasSubmitted}
             />
             <span className="flex items-center text-muted-foreground">
@@ -252,7 +277,7 @@ const DailyChallenge: React.FC = () => {
               type="submit"
               disabled={!userGuess}
               className={cn(
-                "w-full py-2 rounded-lg font-medium transition-all duration-300",
+                "w-full py-2 rounded-lg font-medium transition-all duration-300 btn-animate hover-lift magnetic ripple",
                 userGuess
                   ? "bg-sky-500 text-white hover:bg-sky-600"
                   : "bg-muted text-muted-foreground cursor-not-allowed"
@@ -264,7 +289,7 @@ const DailyChallenge: React.FC = () => {
             <button
               type="button"
               onClick={handleNewChallenge}
-              className="w-full py-2 rounded-lg font-medium transition-all duration-300 bg-green-500 text-white hover:bg-green-600"
+              className="w-full py-2 rounded-lg font-medium transition-all duration-300 bg-green-500 text-white hover:bg-green-600 btn-animate hover-lift magnetic ripple"
             >
               Try A New Challenge
             </button>
@@ -272,14 +297,14 @@ const DailyChallenge: React.FC = () => {
         </form>
         
         {hasSubmitted && (
-          <div className="mt-4 text-center text-sm text-muted-foreground">
+          <div className="mt-4 text-center text-sm text-muted-foreground slide-up">
             The correct answer was: {currentChallenge.answer.toFixed(2)} {currentChallenge.toUnit}
           </div>
         )}
         
         {showReward && currentReward && (
-          <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-sky-50 to-blue-50 dark:from-sky-900/30 dark:to-blue-900/30 border border-sky-100 dark:border-sky-800 text-center animate-fade-in">
-            <div className="flex justify-center mb-2">
+          <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-sky-50 to-blue-50 dark:from-sky-900/30 dark:to-blue-900/30 border border-sky-100 dark:border-sky-800 text-center bounce-in glass-enhanced hover-glow">
+            <div className="flex justify-center mb-2 breathe">
               {currentReward.icon}
             </div>
             <h4 className="font-medium text-lg mb-1">Congratulations!</h4>

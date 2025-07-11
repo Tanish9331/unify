@@ -61,38 +61,38 @@ const Navbar: React.FC = () => {
   return (
     <header 
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 md:px-12',
-        isScrolled ? 'py-3 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-sm' : 'py-5'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 md:px-12 state-transition',
+        isScrolled ? 'py-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-lg glass-enhanced' : 'py-5'
       )}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between slide-in-left">
         <a 
           href="#" 
-          className="flex items-center text-2xl font-display font-bold text-foreground transition-all hover-lift"
+          className="flex items-center text-2xl font-display font-bold text-foreground transition-all hover-lift hover-glow magnetic"
         >
           <img 
             src="/lovable-uploads/eaf6fae9-0c13-4c84-8240-280c1c69018b.png" 
             alt="Revino Logo" 
             className={cn(
-              "h-10 mr-2 transition-all",
+              "h-10 mr-2 transition-all hover-rotate",
             )}
             style={{ 
               objectFit: 'contain', 
               filter: isDarkMode ? 'invert(1) brightness(1.5)' : 'none' 
             }}
           />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-400 dark:to-blue-300">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-400 dark:to-blue-300 text-shimmer">
             TheUnitConverter
           </span>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-8 slide-in-right">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-foreground/80 hover:text-blue-500 dark:hover:text-blue-400 font-medium text-sm transition-all nav-item-hover"
+              className="text-foreground/80 hover:text-blue-500 dark:hover:text-blue-400 font-medium text-sm transition-all nav-item-hover hover-lift magnetic"
             >
               {link.name}
             </a>
@@ -105,7 +105,7 @@ const Navbar: React.FC = () => {
               key={link.name}
               href={link.href}
               onClick={link.onClick}
-              className="flex items-center text-foreground/80 hover:text-blue-500 dark:hover:text-blue-400 font-medium text-sm transition-all nav-item-hover"
+              className="flex items-center text-foreground/80 hover:text-blue-500 dark:hover:text-blue-400 font-medium text-sm transition-all nav-item-hover hover-lift magnetic"
             >
               {link.icon && link.icon}
               {link.name}
@@ -114,10 +114,10 @@ const Navbar: React.FC = () => {
           
           <button
             onClick={toggleDarkMode}
-            className="ml-4 p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors hover-lift"
+            className="ml-4 p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors hover-lift hover-bounce magnetic ripple"
             aria-label="Toggle dark mode"
           >
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            {isDarkMode ? <Sun size={18} className="rotate-in" /> : <Moon size={18} className="rotate-in" />}
           </button>
         </nav>
 
@@ -125,18 +125,18 @@ const Navbar: React.FC = () => {
         <div className="md:hidden flex items-center">
           <button
             onClick={toggleDarkMode}
-            className="mr-2 p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+            className="mr-2 p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors hover-bounce magnetic ripple"
             aria-label="Toggle dark mode"
           >
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            {isDarkMode ? <Sun size={18} className="rotate-in" /> : <Moon size={18} className="rotate-in" />}
           </button>
           
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+            className="p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors hover-bounce magnetic ripple"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            {isMenuOpen ? <X size={18} className="rotate-in" /> : <Menu size={18} className="rotate-in" />}
           </button>
         </div>
       </div>
@@ -144,16 +144,16 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       <div 
         className={cn(
-          "fixed inset-0 bg-background/95 backdrop-blur-sm z-40 transition-transform duration-300 ease-in-out flex flex-col pt-24 px-8",
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
+          "fixed inset-0 bg-background/95 backdrop-blur-xl z-40 transition-all duration-500 ease-in-out flex flex-col pt-24 px-8 glass-enhanced",
+          isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
         )}
       >
-        <nav className="flex flex-col space-y-6">
+        <nav className="flex flex-col space-y-6 stagger-fade-in">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-foreground text-lg font-medium transition-all hover:text-blue-500 dark:hover:text-blue-400"
+              className="text-foreground text-lg font-medium transition-all hover:text-blue-500 dark:hover:text-blue-400 hover-slide magnetic stagger-fade-in"
               onClick={() => setIsMenuOpen(false)}
             >
               {link.name}
@@ -173,7 +173,7 @@ const Navbar: React.FC = () => {
                 }
                 setIsMenuOpen(false);
               }}
-              className="flex items-center text-foreground text-lg font-medium transition-all hover:text-blue-500 dark:hover:text-blue-400"
+              className="flex items-center text-foreground text-lg font-medium transition-all hover:text-blue-500 dark:hover:text-blue-400 hover-slide magnetic stagger-fade-in"
             >
               {link.icon && link.icon}
               {link.name}

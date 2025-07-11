@@ -23,7 +23,7 @@ const AnimatedBackground = () => {
       }
       
       const bubble = document.createElement('div');
-      bubble.className = 'bubble';
+      bubble.className = 'bubble particle-float';
       
       // Random properties
       const size = Math.random() * 50 + 10;
@@ -39,6 +39,8 @@ const AnimatedBackground = () => {
       bubble.style.setProperty('--x-dist', `${xDist}px`);
       bubble.style.setProperty('--x-final', `${xFinal}px`);
       bubble.style.setProperty('--duration', `${duration}s`);
+      bubble.style.opacity = '0.6';
+      bubble.style.filter = 'blur(1px)';
       
       container.appendChild(bubble);
       
@@ -74,6 +76,7 @@ const AnimatedBackground = () => {
       raindrop.style.left = `${left}%`;
       raindrop.style.setProperty('--duration', `${duration}s`);
       raindrop.style.animationDelay = `${delay}s`;
+      raindrop.style.opacity = '0.4';
       
       container.appendChild(raindrop);
       
@@ -86,8 +89,8 @@ const AnimatedBackground = () => {
     };
     
     // Create effects at intervals
-    const bubbleInterval = setInterval(createBubbles, 800);
-    const raindropInterval = setInterval(createRaindrops, 200);
+    const bubbleInterval = setInterval(createBubbles, 600);
+    const raindropInterval = setInterval(createRaindrops, 150);
     
     return () => {
       clearInterval(bubbleInterval);
@@ -101,11 +104,13 @@ const AnimatedBackground = () => {
 // AI Grid Background with animated circles
 const AIGridBackground = () => {
   return (
-    <div className="absolute inset-0 ai-grid pointer-events-none z-0 opacity-50">
-      <div className="ai-circle w-[300px] h-[300px] top-1/4 left-[10%]" style={{ animationDelay: '0s' }}></div>
-      <div className="ai-circle w-[400px] h-[400px] bottom-1/3 right-[15%]" style={{ animationDelay: '-5s' }}></div>
-      <div className="ai-circle w-[200px] h-[200px] top-2/3 left-[25%]" style={{ animationDelay: '-10s' }}></div>
-      <div className="ai-circle w-[350px] h-[350px] top-1/3 right-[30%]" style={{ animationDelay: '-15s' }}></div>
+    <div className="absolute inset-0 ai-grid pointer-events-none z-0 opacity-60">
+      <div className="ai-circle w-[300px] h-[300px] top-1/4 left-[10%] particle-float" style={{ animationDelay: '0s' }}></div>
+      <div className="ai-circle w-[400px] h-[400px] bottom-1/3 right-[15%] particle-float" style={{ animationDelay: '-5s' }}></div>
+      <div className="ai-circle w-[200px] h-[200px] top-2/3 left-[25%] particle-float" style={{ animationDelay: '-10s' }}></div>
+      <div className="ai-circle w-[350px] h-[350px] top-1/3 right-[30%] particle-float" style={{ animationDelay: '-15s' }}></div>
+      <div className="ai-circle w-[250px] h-[250px] top-1/2 left-[60%] particle-float" style={{ animationDelay: '-20s' }}></div>
+      <div className="ai-circle w-[180px] h-[180px] bottom-1/4 left-[40%] particle-float" style={{ animationDelay: '-25s' }}></div>
     </div>
   );
 };
@@ -118,7 +123,7 @@ const Hero: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in');
+            entry.target.classList.add('animate-in');
           }
         });
       },
@@ -138,59 +143,59 @@ const Hero: React.FC = () => {
   }, []);
   
   return (
-    <section id="home" ref={heroRef} className="min-h-screen flex flex-col justify-center relative pt-24 pb-32 px-6 md:px-12 overflow-hidden">
+    <section id="home" ref={heroRef} className="min-h-screen flex flex-col justify-center relative pt-24 pb-32 px-6 md:px-12 overflow-hidden page-enter">
       <AnimatedBackground />
       <AIGridBackground />
       
-      <div className="absolute inset-0 pointer-events-none z-0">
+      <div className="absolute inset-0 pointer-events-none z-0 breathe">
         <div className="absolute left-0 right-0 bottom-0 h-[60%] bg-gradient-to-t from-sky-500/5 to-transparent dark:from-sky-900/10"></div>
       </div>
       
       <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
-        <div className="animate-on-scroll opacity-0" style={{ transitionDelay: '100ms' }}>
-          <span className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-sky-500/10 text-sky-600 dark:bg-sky-400/10 dark:text-sky-400 font-medium mb-4 hover-lift">
-            <Sparkles size={16} className="animate-pulse" />
+        <div className="animate-on-scroll opacity-0 stagger-fade-in" style={{ transitionDelay: '100ms' }}>
+          <span className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-sky-500/10 text-sky-600 dark:bg-sky-400/10 dark:text-sky-400 font-medium mb-4 hover-lift hover-glow">
+            <Sparkles size={16} className="animate-pulse rotate-in" />
             Simple • Precise • Elegant
           </span>
         </div>
         
-        <h1 className="animate-on-scroll opacity-0 text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight text-balance" style={{ transitionDelay: '200ms' }}>
-          <span className="animated-gradient-text">
+        <h1 className="animate-on-scroll opacity-0 text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight text-balance slide-up" style={{ transitionDelay: '200ms' }}>
+          <span className="animated-gradient-text text-shimmer">
             Convert Units with
           </span> 
           <br />
-          <span className="relative animated-gradient-text">
+          <span className="relative animated-gradient-text text-shimmer">
             Precision & Elegance
-            <svg className="absolute -bottom-2 left-0 w-full h-2 text-sky-500/50 dark:text-sky-400/50" viewBox="0 0 300 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className="absolute -bottom-2 left-0 w-full h-2 text-sky-500/50 dark:text-sky-400/50 scale-in" viewBox="0 0 300 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2 10C47.5 4 93 1.5 138.5 2C184 2.5 229.5 4 275 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
             </svg>
           </span>
         </h1>
         
-        <p className="animate-on-scroll opacity-0 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto" style={{ transitionDelay: '300ms' }}>
+        <p className="animate-on-scroll opacity-0 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto slide-in-left" style={{ transitionDelay: '300ms' }}>
           A beautifully designed unit converter that transforms complex calculations into a seamless experience. Fast, accurate, and intuitive.
         </p>
         
-        <div className="animate-on-scroll opacity-0 flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 mb-16" style={{ transitionDelay: '400ms' }}>
+        <div className="animate-on-scroll opacity-0 flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 mb-16 bounce-in" style={{ transitionDelay: '400ms' }}>
           <a 
             href="#converter" 
-            className="px-6 py-3 rounded-lg btn-gradient text-white font-medium hover:shadow-lg hover:shadow-sky-500/20 transition-all duration-300 transform hover:-translate-y-1"
+            className="px-6 py-3 rounded-lg btn-gradient text-white font-medium btn-animate hover-lift hover-glow ripple magnetic"
           >
             Start Converting
           </a>
           <a 
             href="#about" 
-            className="px-6 py-3 rounded-lg glass text-foreground font-medium hover:bg-white/40 dark:hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1"
+            className="px-6 py-3 rounded-lg glass-enhanced text-foreground font-medium hover-lift magnetic ripple"
           >
             Learn More
           </a>
         </div>
       </div>
       
-      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <a href="#converter" className="flex flex-col items-center text-foreground hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
+      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce hover-bounce">
+        <a href="#converter" className="flex flex-col items-center text-foreground hover:text-sky-500 dark:hover:text-sky-400 transition-colors hover-lift">
           <span className="text-sm mb-2">Scroll Down</span>
-          <ArrowDown size={20} className="text-sky-500 dark:text-sky-400 animate-pulse" />
+          <ArrowDown size={20} className="text-sky-500 dark:text-sky-400 animate-pulse hover-bounce" />
         </a>
       </div>
     </section>
