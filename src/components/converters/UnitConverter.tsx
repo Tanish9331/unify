@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Ruler, Weight, Thermometer, Droplet, Clock, Gauge, DollarSign,
@@ -6,7 +5,8 @@ import {
   Database, Magnet, Waves, Type, FlaskConical, Scale, Atom,
   Flame, Fuel, IndianRupee, Binary, Compass, Heart, Map, Search,
   Settings, Star, Timer, Trophy, Volume, Wrench, FileText, Info,
-  ArrowUp, ArrowDown, Calendar, X
+  ArrowUp, ArrowDown, Calendar, X, Cpu, Radio, Wind, Car, Image,
+  User, Shirt, Footprints, CloudSnow, Gauge as TireIcon
 } from 'lucide-react';
 import useUnitConverter, { ConversionType, conversionCategories } from '@/hooks/useUnitConverter';
 import ConversionCard from './ConversionCard';
@@ -27,6 +27,7 @@ const UnitConverter: React.FC = () => {
     }
   }, [selectedType]);
 
+  // Enhanced conversion icons with new categories
   const conversionIcons: Record<string, React.ReactNode> = {
     // Common converters
     length: <Ruler size={18} />,
@@ -39,16 +40,28 @@ const UnitConverter: React.FC = () => {
     pressure: <Gauge size={18} />,
     currency: <IndianRupee size={18} />,
     angle: <Compass size={18} />,
-    data: <Database size={18} />
+    data: <Database size={18} />,
+    // New categories
+    energy: <Zap size={18} />,
+    power: <Flame size={18} />,
+    force: <Magnet size={18} />,
+    frequency: <Radio size={18} />,
+    fuel: <Fuel size={18} />,
+    resolution: <Image size={18} />,
+    bmi: <User size={18} />,
+    clothing: <Shirt size={18} />,
+    shoe: <Footprints size={18} />,
+    wind: <Wind size={18} />,
+    tire: <TireIcon size={18} />,
+    roman: <Type size={18} />
   };
   
   const handleTypeChange = (type: ConversionType) => {
     setSelectedType(type);
   };
 
-  // Create unit mappings for the selected unit type
+  // Enhanced unit mappings for all categories
   const getUnitsForType = (type: ConversionType) => {
-    // This is a simplified example - in a real app, you'd have a more comprehensive mapping
     switch(type) {
       case 'length':
         return [
@@ -75,6 +88,151 @@ const UnitConverter: React.FC = () => {
           { value: 'c', label: 'Celsius (°C)' },
           { value: 'f', label: 'Fahrenheit (°F)' },
           { value: 'k', label: 'Kelvin (K)' },
+        ];
+      case 'area':
+        return [
+          { value: 'mm2', label: 'Square Millimeter (mm²)' },
+          { value: 'cm2', label: 'Square Centimeter (cm²)' },
+          { value: 'm2', label: 'Square Meter (m²)' },
+          { value: 'ha', label: 'Hectare (ha)' },
+          { value: 'km2', label: 'Square Kilometer (km²)' },
+          { value: 'in2', label: 'Square Inch (in²)' },
+          { value: 'ft2', label: 'Square Foot (ft²)' },
+          { value: 'ac', label: 'Acre (ac)' },
+          { value: 'mi2', label: 'Square Mile (mi²)' }
+        ];
+      case 'volume':
+        return [
+          { value: 'ml', label: 'Milliliter (ml)' },
+          { value: 'l', label: 'Liter (L)' },
+          { value: 'pt', label: 'Pint (pt)' },
+          { value: 'qt', label: 'Quart (qt)' },
+          { value: 'gal', label: 'Gallon (gal)' },
+          { value: 'floz', label: 'Fluid Ounce (fl oz)' },
+          { value: 'cup', label: 'Cup (cup)' }
+        ];
+      case 'time':
+        return [
+          { value: 'ms', label: 'Millisecond (ms)' },
+          { value: 's', label: 'Second (s)' },
+          { value: 'min', label: 'Minute (min)' },
+          { value: 'h', label: 'Hour (h)' },
+          { value: 'd', label: 'Day (d)' },
+          { value: 'wk', label: 'Week (wk)' },
+          { value: 'mo', label: 'Month (mo)' },
+          { value: 'yr', label: 'Year (yr)' }
+        ];
+      case 'speed':
+        return [
+          { value: 'mps', label: 'Meters per second (m/s)' },
+          { value: 'kph', label: 'Kilometers per hour (km/h)' },
+          { value: 'mph', label: 'Miles per hour (mph)' },
+          { value: 'kn', label: 'Knot (kn)' },
+          { value: 'ftps', label: 'Feet per second (ft/s)' }
+        ];
+      case 'data':
+        return [
+          { value: 'b', label: 'Byte (B)' },
+          { value: 'kb', label: 'Kilobyte (KB)' },
+          { value: 'mb', label: 'Megabyte (MB)' },
+          { value: 'gb', label: 'Gigabyte (GB)' },
+          { value: 'tb', label: 'Terabyte (TB)' },
+          { value: 'pb', label: 'Petabyte (PB)' }
+        ];
+      case 'pressure':
+        return [
+          { value: 'pa', label: 'Pascal (Pa)' },
+          { value: 'kpa', label: 'Kilopascal (kPa)' },
+          { value: 'bar', label: 'Bar (bar)' },
+          { value: 'psi', label: 'Pound per square inch (psi)' },
+          { value: 'atm', label: 'Atmosphere (atm)' },
+          { value: 'torr', label: 'Torr (Torr)' }
+        ];
+      case 'angle':
+        return [
+          { value: 'deg', label: 'Degree (°)' },
+          { value: 'rad', label: 'Radian (rad)' },
+          { value: 'grad', label: 'Gradian (grad)' },
+          { value: 'arcmin', label: 'Arcminute (\')' },
+          { value: 'arcsec', label: 'Arcsecond (")' }
+        ];
+      case 'energy':
+        return [
+          { value: 'j', label: 'Joule (J)' },
+          { value: 'kj', label: 'Kilojoule (kJ)' },
+          { value: 'cal', label: 'Calorie (cal)' },
+          { value: 'kcal', label: 'Kilocalorie (kcal)' },
+          { value: 'btu', label: 'British Thermal Unit (BTU)' },
+          { value: 'kwh', label: 'Kilowatt Hour (kWh)' }
+        ];
+      case 'power':
+        return [
+          { value: 'w', label: 'Watt (W)' },
+          { value: 'kw', label: 'Kilowatt (kW)' },
+          { value: 'hp', label: 'Horsepower (hp)' },
+          { value: 'btuh', label: 'BTU per hour (BTU/h)' }
+        ];
+      case 'force':
+        return [
+          { value: 'n', label: 'Newton (N)' },
+          { value: 'dyn', label: 'Dyne (dyn)' },
+          { value: 'lbf', label: 'Pound-force (lbf)' },
+          { value: 'kgf', label: 'Kilogram-force (kgf)' }
+        ];
+      case 'frequency':
+        return [
+          { value: 'hz', label: 'Hertz (Hz)' },
+          { value: 'khz', label: 'Kilohertz (kHz)' },
+          { value: 'mhz', label: 'Megahertz (MHz)' },
+          { value: 'ghz', label: 'Gigahertz (GHz)' }
+        ];
+      case 'fuel':
+        return [
+          { value: 'mpg', label: 'Miles per gallon (mpg)' },
+          { value: 'l100km', label: 'Liters per 100km (L/100km)' },
+          { value: 'kml', label: 'Kilometers per liter (km/L)' }
+        ];
+      case 'resolution':
+        return [
+          { value: 'dpi', label: 'Dots per inch (DPI)' },
+          { value: 'ppi', label: 'Pixels per inch (PPI)' },
+          { value: 'px', label: 'Pixels (px)' }
+        ];
+      case 'bmi':
+        return [
+          { value: 'bmi', label: 'BMI' },
+          { value: 'weight', label: 'Weight (kg)' },
+          { value: 'height', label: 'Height (m)' }
+        ];
+      case 'clothing':
+        return [
+          { value: 'us', label: 'US Size' },
+          { value: 'uk', label: 'UK Size' },
+          { value: 'eu', label: 'EU Size' }
+        ];
+      case 'shoe':
+        return [
+          { value: 'us', label: 'US Size' },
+          { value: 'uk', label: 'UK Size' },
+          { value: 'eu', label: 'EU Size' }
+        ];
+      case 'wind':
+        return [
+          { value: 'beaufort', label: 'Beaufort Scale (Bf)' },
+          { value: 'kph', label: 'Kilometers per hour (km/h)' },
+          { value: 'mph', label: 'Miles per hour (mph)' },
+          { value: 'kn', label: 'Knots (kn)' }
+        ];
+      case 'tire':
+        return [
+          { value: 'psi', label: 'PSI (psi)' },
+          { value: 'bar', label: 'Bar (bar)' },
+          { value: 'kpa', label: 'Kilopascal (kPa)' }
+        ];
+      case 'roman':
+        return [
+          { value: 'decimal', label: 'Decimal (123)' },
+          { value: 'roman', label: 'Roman (XII)' }
         ];
       default:
         return [
@@ -129,7 +287,7 @@ const UnitConverter: React.FC = () => {
             Convert between hundreds of different units with precision and ease. Select a category to get started.
           </p>
           
-          {/* Search bar */}
+          {/* Enhanced search bar */}
           <div className="max-w-md mx-auto mt-4 relative">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
@@ -150,7 +308,7 @@ const UnitConverter: React.FC = () => {
               )}
             </div>
             
-            {/* Search results */}
+            {/* Enhanced search results */}
             {searchTerm && searchResults.length > 0 && (
               <div className="absolute top-full mt-2 left-0 right-0 bg-background border border-input rounded-lg shadow-lg p-2 z-10">
                 <div className="max-h-60 overflow-y-auto">
@@ -194,22 +352,16 @@ const UnitConverter: React.FC = () => {
                   Engineering
                 </TabsTrigger>
                 <TabsTrigger 
-                  value="electricity"
+                  value="digital"
                   className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                 >
-                  Electricity
+                  Digital
                 </TabsTrigger>
                 <TabsTrigger 
-                  value="fluids"
+                  value="lifestyle"
                   className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                 >
-                  Fluids
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="other"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                >
-                  Other
+                  Lifestyle
                 </TabsTrigger>
               </TabsList>
               <div className="absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-background to-transparent pointer-events-none"></div>
@@ -244,7 +396,6 @@ const UnitConverter: React.FC = () => {
         
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <div className="w-full lg:w-7/12 animate-scale-in">
-            {/* Updated ConversionCard component with proper props */}
             <ConversionCard
               category={selectedType}
               units={getUnitsForType(selectedType)}
@@ -253,18 +404,37 @@ const UnitConverter: React.FC = () => {
           
           <div className="w-full lg:w-5/12 animate-fade-in" style={{ animationDelay: '100ms' }}>
             <GlassmorphicCard variant="subtle" hover borderGlow>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-medium">Recent Conversions</h3>
-                <button 
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Clear
-                </button>
-              </div>
-              
-              <div className="text-center py-8 text-muted-foreground">
-                <p>No conversion history yet</p>
-                <p className="text-sm mt-1">Your recent conversions will appear here</p>
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Conversion Tips</h3>
+                
+                <div className="space-y-3 text-sm">
+                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-1">Quick Tips</h4>
+                    <ul className="text-blue-700 dark:text-blue-300 space-y-1 text-xs">
+                      <li>• Use keyboard shortcuts for faster conversion</li>
+                      <li>• Adjust decimal places in settings</li>
+                      <li>• Copy results with one click</li>
+                      <li>• View your conversion history</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                    <h4 className="font-medium text-green-800 dark:text-green-200 mb-1">Did You Know?</h4>
+                    <p className="text-green-700 dark:text-green-300 text-xs">
+                      Hover over unit names to see helpful descriptions and learn more about each measurement.
+                    </p>
+                  </div>
+                  
+                  <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                    <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-1">New Features</h4>
+                    <ul className="text-purple-700 dark:text-purple-300 space-y-1 text-xs">
+                      <li>• BMI Calculator</li>
+                      <li>• Roman Numeral Converter</li>
+                      <li>• Clothing & Shoe Sizes</li>
+                      <li>• Wind Speed & Tire Pressure</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </GlassmorphicCard>
           </div>
@@ -272,40 +442,50 @@ const UnitConverter: React.FC = () => {
         
         <div className="mt-20 glass rounded-xl p-8 animate-slide-up" style={{ animationDelay: '200ms' }}>
           <div className="text-center mb-6">
-            <h3 className="text-2xl font-display font-medium mb-2">Why Use TheUnitConverter?</h3>
+            <h3 className="text-2xl font-display font-medium mb-2">Enhanced Features</h3>
             <p className="text-muted-foreground">
-              The most elegant and efficient tool for your conversion needs
+              Discover all the powerful features that make conversion effortless
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center p-4">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M12 2L2 7l10 5l10-5l-10-5z"></path><path d="M2 17l10 5l10-5"></path><path d="M2 12l10 5l10-5"></path></svg>
+                <Settings className="text-primary" size={24} />
               </div>
-              <h4 className="text-lg font-medium mb-2">Precise & Accurate</h4>
+              <h4 className="text-lg font-medium mb-2">Customizable</h4>
               <p className="text-muted-foreground text-sm">
-                All conversions are calculated with mathematical precision for reliable results
+                Adjust decimal places, save preferences, and personalize your experience
               </p>
             </div>
             
             <div className="text-center p-4">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M9.6 20H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v6"></path><path d="m15 9-6 6"></path><path d="M9 9h.01"></path><path d="M15 9h.01"></path><path d="M21 15.7c0 .7-.4 1.3-1 1.7"></path><path d="M16 21.7c0 .7.4 1.3 1 1.7"></path><path d="M12 16.5V21"></path><path d="m19 16 2 2"></path><path d="M21 21a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"></path></svg>
+                <Clock className="text-primary" size={24} />
               </div>
-              <h4 className="text-lg font-medium mb-2">Intuitive Design</h4>
+              <h4 className="text-lg font-medium mb-2">History Tracking</h4>
               <p className="text-muted-foreground text-sm">
-                Clean interface with real-time conversions and simple controls
+                Keep track of your recent conversions with timestamps and easy copying
               </p>
             </div>
             
             <div className="text-center p-4">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><path d="M11 18H8a2 2 0 0 1-2-2V9"></path></svg>
+                <Zap className="text-primary" size={24} />
               </div>
-              <h4 className="text-lg font-medium mb-2">Multiple Units</h4>
+              <h4 className="text-lg font-medium mb-2">Quick Shortcuts</h4>
               <p className="text-muted-foreground text-sm">
-                Convert between a wide range of measurement systems and units
+                Access common conversions instantly with keyboard shortcuts
+              </p>
+            </div>
+            
+            <div className="text-center p-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Info className="text-primary" size={24} />
+              </div>
+              <h4 className="text-lg font-medium mb-2">Educational</h4>
+              <p className="text-muted-foreground text-sm">
+                Learn about units with helpful tooltips and descriptions
               </p>
             </div>
           </div>
