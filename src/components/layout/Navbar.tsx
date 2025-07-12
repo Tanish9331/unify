@@ -68,31 +68,31 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between slide-in-left">
         <a 
           href="#" 
-          className="flex items-center text-2xl font-display font-bold text-foreground transition-all hover-lift hover-glow magnetic"
+          className="flex items-center text-2xl font-display font-bold text-foreground transition-all"
         >
           <img 
             src="/lovable-uploads/eaf6fae9-0c13-4c84-8240-280c1c69018b.png" 
             alt="Revino Logo" 
             className={cn(
-              "h-10 mr-2 transition-all hover-rotate",
+              "h-10 mr-2 transition-all",
             )}
             style={{ 
               objectFit: 'contain', 
               filter: isDarkMode ? 'invert(1) brightness(1.5)' : 'none' 
             }}
           />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-400 dark:to-blue-300 text-shimmer">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-400 dark:to-blue-300">
             TheUnitConverter
           </span>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 slide-in-right">
+        <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-foreground/80 hover:text-blue-500 dark:hover:text-blue-400 font-medium text-sm transition-all nav-item-hover hover-lift magnetic"
+              className="text-foreground/80 hover:text-blue-500 dark:hover:text-blue-400 font-medium text-sm transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-blue-500 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:origin-left hover:after:scale-x-100"
             >
               {link.name}
             </a>
@@ -105,7 +105,7 @@ const Navbar: React.FC = () => {
               key={link.name}
               href={link.href}
               onClick={link.onClick}
-              className="flex items-center text-foreground/80 hover:text-blue-500 dark:hover:text-blue-400 font-medium text-sm transition-all nav-item-hover hover-lift magnetic"
+              className="flex items-center text-foreground/80 hover:text-blue-500 dark:hover:text-blue-400 font-medium text-sm transition-colors"
             >
               {link.icon && link.icon}
               {link.name}
@@ -114,10 +114,10 @@ const Navbar: React.FC = () => {
           
           <button
             onClick={toggleDarkMode}
-            className="ml-4 p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors hover-lift hover-bounce magnetic ripple"
+            className="ml-4 p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all hover:scale-110"
             aria-label="Toggle dark mode"
           >
-            {isDarkMode ? <Sun size={18} className="rotate-in" /> : <Moon size={18} className="rotate-in" />}
+            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </nav>
 
@@ -125,18 +125,18 @@ const Navbar: React.FC = () => {
         <div className="md:hidden flex items-center">
           <button
             onClick={toggleDarkMode}
-            className="mr-2 p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors hover-bounce magnetic ripple"
+            className="mr-2 p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all hover:scale-110"
             aria-label="Toggle dark mode"
           >
-            {isDarkMode ? <Sun size={18} className="rotate-in" /> : <Moon size={18} className="rotate-in" />}
+            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors hover-bounce magnetic ripple"
+            className="p-2 rounded-full bg-secondary hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all hover:scale-110"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X size={18} className="rotate-in" /> : <Menu size={18} className="rotate-in" />}
+            {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
@@ -144,16 +144,16 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       <div 
         className={cn(
-          "fixed inset-0 bg-background/95 backdrop-blur-xl z-40 transition-all duration-500 ease-in-out flex flex-col pt-24 px-8 glass-enhanced",
+          "fixed inset-0 bg-background/95 backdrop-blur-xl z-40 transition-all duration-500 ease-in-out flex flex-col pt-24 px-8",
           isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
         )}
       >
-        <nav className="flex flex-col space-y-6 stagger-fade-in">
+        <nav className="flex flex-col space-y-6">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-foreground text-lg font-medium transition-all hover:text-blue-500 dark:hover:text-blue-400 hover-slide magnetic stagger-fade-in"
+              className="text-foreground text-lg font-medium transition-colors hover:text-blue-500 dark:hover:text-blue-400"
               onClick={() => setIsMenuOpen(false)}
             >
               {link.name}
@@ -173,7 +173,7 @@ const Navbar: React.FC = () => {
                 }
                 setIsMenuOpen(false);
               }}
-              className="flex items-center text-foreground text-lg font-medium transition-all hover:text-blue-500 dark:hover:text-blue-400 hover-slide magnetic stagger-fade-in"
+              className="flex items-center text-foreground text-lg font-medium transition-colors hover:text-blue-500 dark:hover:text-blue-400"
             >
               {link.icon && link.icon}
               {link.name}

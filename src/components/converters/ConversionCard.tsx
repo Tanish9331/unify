@@ -238,7 +238,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
   }, []);
 
   return (
-    <Card className="w-full shadow-md border border-gray-100 dark:border-gray-800 glass-enhanced">
+    <Card className="w-full shadow-md border border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg">
       <CardContent className="pt-6">
         <Tabs defaultValue="convert" className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-6">
@@ -256,7 +256,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                 <select 
                   value={decimalPlaces} 
                   onChange={(e) => setDecimalPlaces(Number(e.target.value))}
-                  className="px-2 py-1 rounded border bg-background text-sm"
+                  className="px-2 py-1 rounded border bg-background text-sm transition-colors focus:ring-2 focus:ring-primary/30"
                 >
                   {[2, 3, 4, 5, 6].map(n => (
                     <option key={n} value={n}>{n}</option>
@@ -295,7 +295,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                     type="number"
                     value={value.toString()}
                     onChange={handleInputChange}
-                    className={cn("mt-2", inputError && "border-red-500")}
+                    className={cn("mt-2 transition-colors focus:ring-2 focus:ring-primary/30", inputError && "border-red-500")}
                     placeholder="Enter value"
                   />
                   {inputError && (
@@ -309,7 +309,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                   variant="outline" 
                   size="icon" 
                   onClick={switchUnits} 
-                  className="rounded-full h-10 w-10"
+                  className="rounded-full h-10 w-10 transition-all hover:scale-105"
                   title="Swap units (or press Tab)"
                 >
                   <ArrowRightLeft className="h-4 w-4" />
@@ -350,7 +350,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                     variant="ghost"
                     size="sm"
                     onClick={() => copyResult(formatResult(result))}
-                    className="ml-2 h-6 w-6 p-0"
+                    className="ml-2 h-6 w-6 p-0 transition-all hover:scale-110"
                     title="Copy result"
                   >
                     <Copy className="h-3 w-3" />
@@ -360,7 +360,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
             </div>
 
             <div className="pt-2">
-              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3">
+              <div className="bg-blue-50/80 dark:bg-blue-900/30 backdrop-blur-sm rounded-lg p-3">
                 <p className="text-sm text-center text-blue-700 dark:text-blue-300">
                   {value} {fromUnit} = {formatResult(result)} {toUnit}
                 </p>
@@ -372,7 +372,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-medium">Recent Conversions</h3>
               {history.length > 0 && (
-                <Button variant="ghost" size="sm" onClick={clearHistory}>
+                <Button variant="ghost" size="sm" onClick={clearHistory} className="transition-colors hover:bg-red-50 hover:text-red-600">
                   Clear All
                 </Button>
               )}
@@ -400,7 +400,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                         variant="ghost"
                         size="sm"
                         onClick={() => copyResult(item.formattedResult)}
-                        className="h-6 w-6 p-0"
+                        className="h-6 w-6 p-0 transition-all hover:scale-110"
                         title="Copy result"
                       >
                         <Copy className="h-3 w-3" />
@@ -409,7 +409,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                         variant="ghost"
                         size="sm"
                         onClick={() => clearHistoryItem(item.id)}
-                        className="h-6 w-6 p-0"
+                        className="h-6 w-6 p-0 transition-colors hover:text-red-600"
                         title="Remove from history"
                       >
                         <Trash2 className="h-3 w-3" />
@@ -431,14 +431,14 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                   size="sm"
                   onClick={() => applyQuickConversion(quick)}
                   disabled={quick.category !== category}
-                  className="text-xs"
+                  className="text-xs transition-all hover:scale-105"
                 >
                   {quick.label}
                 </Button>
               ))}
             </div>
             
-            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <div className="mt-6 p-4 bg-blue-50/80 dark:bg-blue-900/30 backdrop-blur-sm rounded-lg">
               <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Keyboard Shortcuts</h4>
               <div className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
                 <div><kbd className="px-1 py-0.5 bg-blue-100 dark:bg-blue-800 rounded text-xs">Enter</kbd> Convert (when typing)</div>
@@ -451,7 +451,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
       </CardContent>
       
       <CardFooter className="flex justify-end border-t border-gray-100 dark:border-gray-800 py-3">
-        <Button variant="ghost" size="sm" onClick={resetValues} className="text-xs">
+        <Button variant="ghost" size="sm" onClick={resetValues} className="text-xs transition-all hover:scale-105">
           <RotateCcw className="h-3 w-3 mr-1" />
           Reset
         </Button>

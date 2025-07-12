@@ -302,40 +302,40 @@ const UnitConverter: React.FC = () => {
   return (
     <section id="converter" className="py-20 px-6 md:px-12 smooth-scroll">
       <div className="max-w-5xl mx-auto">
-        <div className={cn("text-center mb-12 space-y-2", isVisible && "stagger-fade-in")}>
-          <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-medium hover-bounce magnetic">
+        <div className="text-center mb-12 space-y-2">
+          <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-medium">
             Powerful & Simple
           </span>
-          <h2 className="text-3xl md:text-4xl font-display font-bold slide-up text-shimmer">Advanced Unit Converter</h2>
-          <p className="text-muted-foreground max-w-xl mx-auto slide-in-left">
+          <h2 className="text-3xl md:text-4xl font-display font-bold">Advanced Unit Converter</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
             Convert between hundreds of different units with precision and ease. Select a category to get started.
           </p>
           
           {/* Enhanced search bar */}
-          <div className="max-w-md mx-auto mt-4 relative scale-in">
+          <div className="max-w-md mx-auto mt-4 relative">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover-bounce" size={18} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
               <input 
                 type="text" 
                 placeholder="Search for a converter..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-full border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all focus-enhanced glass-enhanced"
+                className="w-full pl-10 pr-4 py-2 rounded-full border border-input bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
               />
               {searchTerm && (
                 <button 
                   onClick={() => setSearchTerm('')}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground hover-bounce magnetic ripple"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <X size={16} className="rotate-in" />
+                  <X size={16} />
                 </button>
               )}
             </div>
             
             {/* Enhanced search results */}
             {searchTerm && searchResults.length > 0 && (
-              <div className="absolute top-full mt-2 left-0 right-0 bg-background border border-input rounded-lg shadow-lg p-2 z-10 glass-enhanced slide-up">
-                <div className="max-h-60 overflow-y-auto smooth-scroll">
+              <div className="absolute top-full mt-2 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border border-input rounded-lg shadow-lg p-2 z-10">
+                <div className="max-h-60 overflow-y-auto">
                   {searchResults.map((item, index) => (
                     <button
                       key={`${item.type}-${index}`}
@@ -344,9 +344,9 @@ const UnitConverter: React.FC = () => {
                         handleTypeChange(item.type);
                         setSearchTerm('');
                       }}
-                      className="w-full text-left px-3 py-2 rounded-md hover:bg-muted flex items-center gap-2 hover-lift magnetic ripple stagger-fade-in"
+                      className="w-full text-left px-3 py-2 rounded-md hover:bg-muted flex items-center gap-2 transition-colors"
                     >
-                      {conversionIcons[item.type] || <Calculator size={18} className="hover-bounce" />}
+                      {conversionIcons[item.type] || <Calculator size={18} />}
                       <span>{item.label}</span>
                       <span className="ml-auto text-xs opacity-60 capitalize">
                         {item.category}
@@ -359,31 +359,31 @@ const UnitConverter: React.FC = () => {
           </div>
         </div>
         
-        <div className={cn("mb-8", isVisible && "slide-in-right")}>
+        <div className="mb-8">
           <Tabs defaultValue="common" value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <div className="relative overflow-hidden mb-2 breathe">
-              <TabsList className="w-full justify-start overflow-x-auto pb-2 flex gap-2 bg-transparent h-auto smooth-scroll">
+            <div className="relative overflow-hidden mb-2">
+              <TabsList className="w-full justify-start overflow-x-auto pb-2 flex gap-2 bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg h-auto">
                 <TabsTrigger 
                   value="common"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover-lift magnetic ripple state-transition"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
                 >
                   Common
                 </TabsTrigger>
                 <TabsTrigger 
                   value="engineering"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover-lift magnetic ripple state-transition"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
                 >
                   Engineering
                 </TabsTrigger>
                 <TabsTrigger 
                   value="digital"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover-lift magnetic ripple state-transition"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
                 >
                   Digital
                 </TabsTrigger>
                 <TabsTrigger 
                   value="lifestyle"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover-lift magnetic ripple state-transition"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
                 >
                   Lifestyle
                 </TabsTrigger>
@@ -394,22 +394,20 @@ const UnitConverter: React.FC = () => {
             {Object.keys(conversionCategories).map((category) => (
               <TabsContent key={category} value={category} className="mt-4">
                 <div 
-                  ref={tabsRef}
-                  className="flex flex-wrap gap-2 stagger-fade-in"
+                  className="flex flex-wrap gap-2"
                 >
                   {filterConverters(category as keyof typeof conversionCategories).map((item, index) => (
                     <button
                       key={item.type}
                       onClick={() => handleTypeChange(item.type)}
                       className={cn(
-                        "flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all duration-500 hover-lift magnetic ripple stagger-fade-in",
+                        "flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all",
                         selectedType === item.type 
-                          ? "bg-primary text-primary-foreground active-tab hover-glow" 
-                          : "bg-secondary/50 text-secondary-foreground hover:bg-secondary/70 glass-enhanced"
+                          ? "bg-primary text-primary-foreground" 
+                          : "bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg text-secondary-foreground hover:bg-white/90 dark:hover:bg-gray-900/90"
                       )}
-                      style={{ animationDelay: `${index * 0.1}s` }}
                     >
-                      {conversionIcons[item.type] || <Calculator size={18} className="hover-bounce" />}
+                      {conversionIcons[item.type] || <Calculator size={18} />}
                       <span>{item.label}</span>
                     </button>
                   ))}
@@ -428,12 +426,12 @@ const UnitConverter: React.FC = () => {
           </div>
           
           <div className="w-full lg:w-5/12">
-            <GlassmorphicCard variant="subtle" hover borderGlow>
+            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-xl p-6 border border-white/20 dark:border-white/10">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium">Conversion Tips</h3>
                 
                 <div className="space-y-3 text-sm">
-                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg glass-enhanced">
+                  <div className="p-3 bg-blue-50/80 dark:bg-blue-900/30 backdrop-blur-sm rounded-lg">
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-1">Quick Tips</h4>
                     <ul className="text-blue-700 dark:text-blue-300 space-y-1 text-xs">
                       <li>• Use keyboard shortcuts for faster conversion</li>
@@ -443,14 +441,14 @@ const UnitConverter: React.FC = () => {
                     </ul>
                   </div>
                   
-                  <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg glass-enhanced">
+                  <div className="p-3 bg-green-50/80 dark:bg-green-900/30 backdrop-blur-sm rounded-lg">
                     <h4 className="font-medium text-green-800 dark:text-green-200 mb-1">Did You Know?</h4>
                     <p className="text-green-700 dark:text-green-300 text-xs">
                       Hover over unit names to see helpful descriptions and learn more about each measurement.
                     </p>
                   </div>
                   
-                  <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg glass-enhanced">
+                  <div className="p-3 bg-purple-50/80 dark:bg-purple-900/30 backdrop-blur-sm rounded-lg">
                     <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-1">New Features</h4>
                     <ul className="text-purple-700 dark:text-purple-300 space-y-1 text-xs">
                       <li>• BMI Calculator</li>
@@ -461,11 +459,11 @@ const UnitConverter: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </GlassmorphicCard>
+            </div>
           </div>
         </div>
         
-        <div className="mt-20 glass-enhanced rounded-xl p-8">
+        <div className="mt-20 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-xl p-8 border border-white/20 dark:border-white/10">
           <div className="text-center mb-6">
             <h3 className="text-2xl font-display font-medium mb-2">Enhanced Features</h3>
             <p className="text-muted-foreground">
