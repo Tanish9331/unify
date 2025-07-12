@@ -34,7 +34,6 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
   const [decimalPlaces, setDecimalPlaces] = useState(2);
   const [history, setHistory] = useState<any[]>([]);
   const [inputError, setInputError] = useState('');
-  const [isAnimating, setIsAnimating] = useState(false);
   const { toast } = useToast();
   
   // Load preferences and history
@@ -55,10 +54,8 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
   // Update units when category changes
   useEffect(() => {
     if (units.length > 0) {
-      setIsAnimating(true);
       setFromUnit(units[0].value);
       setToUnit(units.length > 1 ? units[1].value : units[0].value);
-      setTimeout(() => setIsAnimating(false), 300);
     }
   }, [units, category]);
 
@@ -107,10 +104,8 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
   // Calculate result whenever inputs change
   useEffect(() => {
     if (!inputError && fromUnit && toUnit) {
-      setIsAnimating(true);
       const convertedResult = convert(value, fromUnit, toUnit, category);
       setResult(convertedResult);
-      setTimeout(() => setIsAnimating(false), 500);
       
       // Add to history if it's a meaningful conversion
       if (value !== 0 && convertedResult !== 0 && fromUnit !== toUnit) {
@@ -163,14 +158,11 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
   };
 
   const switchUnits = () => {
-    setIsAnimating(true);
     const tempFromUnit = fromUnit;
     const tempToUnit = toUnit;
     
     setFromUnit(tempToUnit);
     setToUnit(tempFromUnit);
-    
-    setTimeout(() => setIsAnimating(false), 400);
     
     toast({
       title: "Units switched",
@@ -180,12 +172,10 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
   };
 
   const resetValues = () => {
-    setIsAnimating(true);
     setValue(1);
     setFromUnit(units[0]?.value || '');
     setToUnit(units[1]?.value || units[0]?.value || '');
     setInputError('');
-    setTimeout(() => setIsAnimating(false), 300);
   };
 
   const copyResult = (value: string) => {
@@ -221,11 +211,9 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
 
   const applyQuickConversion = (quickConv: any) => {
     if (quickConv.category === category) {
-      setIsAnimating(true);
       setFromUnit(quickConv.from);
       setToUnit(quickConv.to);
       setValue(1);
-      setTimeout(() => setIsAnimating(false), 400);
     }
   };
 
@@ -250,25 +238,25 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
   }, []);
 
   return (
-    <Card className="w-full shadow-md border border-gray-100 dark:border-gray-800 glass-enhanced hover-lift card-float">
+    <Card className="w-full shadow-md border border-gray-100 dark:border-gray-800 glass-enhanced">
       <CardContent className="pt-6">
         <Tabs defaultValue="convert" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6 glass-enhanced">
-            <TabsTrigger value="convert" className="hover-lift magnetic ripple state-transition">Convert</TabsTrigger>
-            <TabsTrigger value="history" className="hover-lift magnetic ripple state-transition">History</TabsTrigger>
-            <TabsTrigger value="shortcuts" className="hover-lift magnetic ripple state-transition">Quick</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 mb-6">
+            <TabsTrigger value="convert">Convert</TabsTrigger>
+            <TabsTrigger value="history">History</TabsTrigger>
+            <TabsTrigger value="shortcuts">Quick</TabsTrigger>
           </TabsList>
           
           <TabsContent value="convert" className="space-y-6">
             {/* Settings Row */}
-            <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg glass-enhanced hover-lift">
+            <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
               <div className="flex items-center gap-2">
-                <Settings className="h-4 w-4 text-muted-foreground hover-rotate" />
+                <Settings className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm font-medium">Decimal Places:</span>
                 <select 
                   value={decimalPlaces} 
                   onChange={(e) => setDecimalPlaces(Number(e.target.value))}
-                  className="px-2 py-1 rounded border bg-background text-sm focus-enhanced state-transition"
+                  className="px-2 py-1 rounded border bg-background text-sm"
                 >
                   {[2, 3, 4, 5, 6].map(n => (
                     <option key={n} value={n}>{n}</option>
@@ -277,26 +265,26 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
               </div>
             </div>
 
-            <div className={cn("grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-3 items-center", isAnimating && "loading-pulse")}>
-              <div className="space-y-2 slide-in-left">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-3 items-center">
+              <div className="space-y-2">
                 <label className="text-sm font-medium flex items-center gap-1">
                   From
                   {getUnitDetails(fromUnit)?.description && (
                     <div className="group relative">
-                      <Info className="h-3 w-3 text-muted-foreground cursor-help hover-bounce" />
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 glass-enhanced scale-in">
+                      <Info className="h-3 w-3 text-muted-foreground cursor-help" />
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
                         {getUnitDetails(fromUnit)?.description}
                       </div>
                     </div>
                   )}
                 </label>
                 <Select value={fromUnit} onValueChange={setFromUnit}>
-                  <SelectTrigger className="w-full focus-enhanced state-transition hover-lift">
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select unit" />
                   </SelectTrigger>
-                  <SelectContent className="glass-enhanced">
+                  <SelectContent>
                     {units.map((unit) => (
-                      <SelectItem key={unit.value} value={unit.value} className="hover-lift magnetic">
+                      <SelectItem key={unit.value} value={unit.value}>
                         {unit.label}
                       </SelectItem>
                     ))}
@@ -307,72 +295,72 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                     type="number"
                     value={value.toString()}
                     onChange={handleInputChange}
-                    className={cn("mt-2 focus-enhanced state-transition", inputError && "border-red-500")}
+                    className={cn("mt-2", inputError && "border-red-500")}
                     placeholder="Enter value"
                   />
                   {inputError && (
-                    <p className="text-xs text-red-500 slide-in-left">{inputError}</p>
+                    <p className="text-xs text-red-500">{inputError}</p>
                   )}
                 </div>
               </div>
               
-              <div className="flex justify-center my-2 bounce-in">
+              <div className="flex justify-center my-2">
                 <Button 
                   variant="outline" 
                   size="icon" 
                   onClick={switchUnits} 
-                  className="rounded-full h-10 w-10 hover-bounce magnetic ripple"
+                  className="rounded-full h-10 w-10"
                   title="Swap units (or press Tab)"
                 >
-                  <ArrowRightLeft className="h-4 w-4 hover-rotate" />
+                  <ArrowRightLeft className="h-4 w-4" />
                 </Button>
               </div>
               
-              <div className="space-y-2 slide-in-right">
+              <div className="space-y-2">
                 <label className="text-sm font-medium flex items-center gap-1">
                   To
                   {getUnitDetails(toUnit)?.description && (
                     <div className="group relative">
-                      <Info className="h-3 w-3 text-muted-foreground cursor-help hover-bounce" />
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 glass-enhanced scale-in">
+                      <Info className="h-3 w-3 text-muted-foreground cursor-help" />
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
                         {getUnitDetails(toUnit)?.description}
                       </div>
                     </div>
                   )}
                 </label>
                 <Select value={toUnit} onValueChange={setToUnit}>
-                  <SelectTrigger className="w-full focus-enhanced state-transition hover-lift">
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select unit" />
                   </SelectTrigger>
-                  <SelectContent className="glass-enhanced">
+                  <SelectContent>
                     {units.map((unit) => (
-                      <SelectItem key={unit.value} value={unit.value} className="hover-lift magnetic">
+                      <SelectItem key={unit.value} value={unit.value}>
                         {unit.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                <div className="mt-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-md border border-gray-100 dark:border-gray-800 flex items-center justify-between glass-enhanced hover-glow breathe">
+                <div className="mt-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-md border border-gray-100 dark:border-gray-800 flex items-center justify-between">
                   <AnimatedNumber 
                     value={result} 
-                    className="text-lg font-medium text-shimmer" 
+                    className="text-lg font-medium" 
                     decimals={decimalPlaces}
                   />
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => copyResult(formatResult(result))}
-                    className="ml-2 h-6 w-6 p-0 hover-bounce magnetic ripple"
+                    className="ml-2 h-6 w-6 p-0"
                     title="Copy result"
                   >
-                    <Copy className="h-3 w-3 hover-rotate" />
+                    <Copy className="h-3 w-3" />
                   </Button>
                 </div>
               </div>
             </div>
 
             <div className="pt-2">
-              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 glass-enhanced hover-lift scale-in">
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3">
                 <p className="text-sm text-center text-blue-700 dark:text-blue-300">
                   {value} {fromUnit} = {formatResult(result)} {toUnit}
                 </p>
@@ -382,23 +370,23 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
           
           <TabsContent value="history" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-medium text-shimmer">Recent Conversions</h3>
+              <h3 className="text-lg font-medium">Recent Conversions</h3>
               {history.length > 0 && (
-                <Button variant="ghost" size="sm" onClick={clearHistory} className="hover-bounce magnetic ripple">
+                <Button variant="ghost" size="sm" onClick={clearHistory}>
                   Clear All
                 </Button>
               )}
             </div>
             
             {history.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground slide-up">
+              <div className="text-center py-8 text-muted-foreground">
                 <p>No conversion history yet</p>
                 <p className="text-sm mt-1">Your recent conversions will appear here</p>
               </div>
             ) : (
-              <div className="space-y-2 max-h-[400px] overflow-y-auto smooth-scroll">
+              <div className="space-y-2 max-h-[400px] overflow-y-auto">
                 {history.map((item, index) => (
-                  <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg glass-enhanced hover-lift stagger-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
                     <div className="flex-1">
                       <div className="text-sm font-medium">
                         {item.fromValue} {item.fromUnit} → {item.formattedResult} {item.toUnit}
@@ -412,19 +400,19 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                         variant="ghost"
                         size="sm"
                         onClick={() => copyResult(item.formattedResult)}
-                        className="h-6 w-6 p-0 hover-bounce magnetic ripple"
+                        className="h-6 w-6 p-0"
                         title="Copy result"
                       >
-                        <Copy className="h-3 w-3 hover-rotate" />
+                        <Copy className="h-3 w-3" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => clearHistoryItem(item.id)}
-                        className="h-6 w-6 p-0 hover-bounce magnetic ripple"
+                        className="h-6 w-6 p-0"
                         title="Remove from history"
                       >
-                        <Trash2 className="h-3 w-3 hover-rotate" />
+                        <Trash2 className="h-3 w-3" />
                       </Button>
                     </div>
                   </div>
@@ -434,8 +422,8 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
           </TabsContent>
           
           <TabsContent value="shortcuts" className="space-y-4">
-            <h3 className="text-lg font-medium text-shimmer">Quick Conversions</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 stagger-fade-in">
+            <h3 className="text-lg font-medium">Quick Conversions</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {quickConversions.map((quick, index) => (
                 <Button
                   key={index}
@@ -443,29 +431,28 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                   size="sm"
                   onClick={() => applyQuickConversion(quick)}
                   disabled={quick.category !== category}
-                  className="text-xs hover-lift magnetic ripple stagger-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  className="text-xs"
                 >
                   {quick.label}
                 </Button>
               ))}
             </div>
             
-            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg glass-enhanced hover-lift scale-in">
+            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
               <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Keyboard Shortcuts</h4>
               <div className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
-                <div><kbd className="px-1 py-0.5 bg-blue-100 dark:bg-blue-800 rounded text-xs hover-bounce">Enter</kbd> Convert (when typing)</div>
-                <div><kbd className="px-1 py-0.5 bg-blue-100 dark:bg-blue-800 rounded text-xs hover-bounce">Escape</kbd> Reset values</div>
-                <div><kbd className="px-1 py-0.5 bg-blue-100 dark:bg-blue-800 rounded text-xs hover-bounce">Tab</kbd> Navigate between fields</div>
+                <div><kbd className="px-1 py-0.5 bg-blue-100 dark:bg-blue-800 rounded text-xs">Enter</kbd> Convert (when typing)</div>
+                <div><kbd className="px-1 py-0.5 bg-blue-100 dark:bg-blue-800 rounded text-xs">Escape</kbd> Reset values</div>
+                <div><kbd className="px-1 py-0.5 bg-blue-100 dark:bg-blue-800 rounded text-xs">Tab</kbd> Navigate between fields</div>
               </div>
             </div>
           </TabsContent>
         </Tabs>
       </CardContent>
       
-      <CardFooter className="flex justify-end border-t border-gray-100 dark:border-gray-800 py-3 glass-enhanced">
-        <Button variant="ghost" size="sm" onClick={resetValues} className="text-xs hover-lift magnetic ripple">
-          <RotateCcw className="h-3 w-3 mr-1 hover-rotate" />
+      <CardFooter className="flex justify-end border-t border-gray-100 dark:border-gray-800 py-3">
+        <Button variant="ghost" size="sm" onClick={resetValues} className="text-xs">
+          <RotateCcw className="h-3 w-3 mr-1" />
           Reset
         </Button>
       </CardFooter>

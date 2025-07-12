@@ -420,20 +420,20 @@ const UnitConverter: React.FC = () => {
         </div>
         
         <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <div className={cn("w-full lg:w-7/12", isVisible && "scale-in card-float")}>
+          <div className="w-full lg:w-7/12">
             <ConversionCard
               category={selectedType}
               units={getUnitsForType(selectedType)}
             />
           </div>
           
-          <div className={cn("w-full lg:w-5/12", isVisible && "slide-in-right")} style={{ animationDelay: '100ms' }}>
-            <GlassmorphicCard variant="subtle" hover borderGlow className="breathe">
+          <div className="w-full lg:w-5/12">
+            <GlassmorphicCard variant="subtle" hover borderGlow>
               <div className="space-y-4">
-                <h3 className="text-lg font-medium text-shimmer">Conversion Tips</h3>
+                <h3 className="text-lg font-medium">Conversion Tips</h3>
                 
                 <div className="space-y-3 text-sm">
-                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover-lift glass-enhanced">
+                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg glass-enhanced">
                     <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-1">Quick Tips</h4>
                     <ul className="text-blue-700 dark:text-blue-300 space-y-1 text-xs">
                       <li>• Use keyboard shortcuts for faster conversion</li>
@@ -443,14 +443,14 @@ const UnitConverter: React.FC = () => {
                     </ul>
                   </div>
                   
-                  <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover-lift glass-enhanced">
+                  <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg glass-enhanced">
                     <h4 className="font-medium text-green-800 dark:text-green-200 mb-1">Did You Know?</h4>
                     <p className="text-green-700 dark:text-green-300 text-xs">
                       Hover over unit names to see helpful descriptions and learn more about each measurement.
                     </p>
                   </div>
                   
-                  <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg hover-lift glass-enhanced">
+                  <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg glass-enhanced">
                     <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-1">New Features</h4>
                     <ul className="text-purple-700 dark:text-purple-300 space-y-1 text-xs">
                       <li>• BMI Calculator</li>
@@ -465,18 +465,18 @@ const UnitConverter: React.FC = () => {
           </div>
         </div>
         
-        <div className={cn("mt-20 glass-enhanced rounded-xl p-8", isVisible && "slide-up card-float")} style={{ animationDelay: '200ms' }}>
+        <div className="mt-20 glass-enhanced rounded-xl p-8">
           <div className="text-center mb-6">
-            <h3 className="text-2xl font-display font-medium mb-2 text-shimmer">Enhanced Features</h3>
-            <p className="text-muted-foreground slide-in-left">
+            <h3 className="text-2xl font-display font-medium mb-2">Enhanced Features</h3>
+            <p className="text-muted-foreground">
               Discover all the powerful features that make conversion effortless
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 stagger-fade-in">
-            <div className="text-center p-4 hover-lift magnetic">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-bounce breathe">
-                <Settings className="text-primary hover-rotate" size={24} />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="text-center p-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Settings className="text-primary" size={24} />
               </div>
               <h4 className="text-lg font-medium mb-2">Customizable</h4>
               <p className="text-muted-foreground text-sm">
@@ -484,9 +484,9 @@ const UnitConverter: React.FC = () => {
               </p>
             </div>
             
-            <div className="text-center p-4 hover-lift magnetic">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-bounce breathe">
-                <Clock className="text-primary hover-rotate" size={24} />
+            <div className="text-center p-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="text-primary" size={24} />
               </div>
               <h4 className="text-lg font-medium mb-2">History Tracking</h4>
               <p className="text-muted-foreground text-sm">
@@ -494,9 +494,9 @@ const UnitConverter: React.FC = () => {
               </p>
             </div>
             
-            <div className="text-center p-4 hover-lift magnetic">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-bounce breathe">
-                <Zap className="text-primary hover-bounce" size={24} />
+            <div className="text-center p-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Zap className="text-primary" size={24} />
               </div>
               <h4 className="text-lg font-medium mb-2">Quick Shortcuts</h4>
               <p className="text-muted-foreground text-sm">
@@ -504,9 +504,9 @@ const UnitConverter: React.FC = () => {
               </p>
             </div>
             
-            <div className="text-center p-4 hover-lift magnetic">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-bounce breathe">
-                <Info className="text-primary hover-rotate" size={24} />
+            <div className="text-center p-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Info className="text-primary" size={24} />
               </div>
               <h4 className="text-lg font-medium mb-2">Educational</h4>
               <p className="text-muted-foreground text-sm">

@@ -68,7 +68,7 @@ const Index = () => {
               <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 hover-bounce magnetic">
                 Our Story
               </span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-shimmer">
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
                 About TheUnitConverter
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto slide-in-left">
@@ -111,7 +111,7 @@ const Index = () => {
         
         <section className="py-20 px-6 md:px-12 glass-enhanced">
           <div className="max-w-3xl mx-auto text-center animate-on-scroll opacity-0 stagger-fade-in">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-shimmer">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
               Ready to Convert?
             </h2>
             <p className="text-muted-foreground mb-8 max-w-xl mx-auto slide-in-left">

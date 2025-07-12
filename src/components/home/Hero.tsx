@@ -160,11 +160,11 @@ const Hero: React.FC = () => {
         </div>
         
         <h1 className="animate-on-scroll opacity-0 text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight text-balance slide-up" style={{ transitionDelay: '200ms' }}>
-          <span className="animated-gradient-text text-shimmer">
+          <span className="text-gradient">
             Convert Units with
           </span> 
           <br />
-          <span className="relative animated-gradient-text text-shimmer">
+          <span className="relative text-gradient">
             Precision & Elegance
             <svg className="absolute -bottom-2 left-0 w-full h-2 text-sky-500/50 dark:text-sky-400/50 scale-in" viewBox="0 0 300 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2 10C47.5 4 93 1.5 138.5 2C184 2.5 229.5 4 275 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
