@@ -277,7 +277,7 @@ const DailyChallenge: React.FC = () => {
               type="submit"
               disabled={!userGuess}
               className={cn(
-                "w-full py-2 rounded-lg font-medium transition-all hover:scale-105",
+                "w-full py-2 rounded-lg font-medium transition-all duration-300 ease-out hover:scale-105 active:scale-95",
                 userGuess
                   ? "bg-sky-500 text-white hover:bg-sky-600"
                   : "bg-muted text-muted-foreground cursor-not-allowed"
@@ -289,7 +289,7 @@ const DailyChallenge: React.FC = () => {
             <button
               type="button"
               onClick={handleNewChallenge}
-              className="w-full py-2 rounded-lg font-medium transition-all bg-green-500 text-white hover:bg-green-600 hover:scale-105"
+              className="w-full py-2 rounded-lg font-medium transition-all duration-300 ease-out bg-green-500 text-white hover:bg-green-600 hover:scale-105 active:scale-95"
             >
               Try A New Challenge
             </button>

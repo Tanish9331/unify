@@ -238,16 +238,16 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
   }, []);
 
   return (
-    <Card className="w-full shadow-md border border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg">
+    <Card className="w-full shadow-md border border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg transition-all duration-300">
       <CardContent className="pt-6">
         <Tabs defaultValue="convert" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6">
-            <TabsTrigger value="convert">Convert</TabsTrigger>
-            <TabsTrigger value="history">History</TabsTrigger>
-            <TabsTrigger value="shortcuts">Quick</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 mb-6 transition-all duration-300">
+            <TabsTrigger value="convert" className="transition-all duration-300 ease-out data-[state=active]:shadow-sm">Convert</TabsTrigger>
+            <TabsTrigger value="history" className="transition-all duration-300 ease-out data-[state=active]:shadow-sm">History</TabsTrigger>
+            <TabsTrigger value="shortcuts" className="transition-all duration-300 ease-out data-[state=active]:shadow-sm">Quick</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="convert" className="space-y-6">
+          <TabsContent value="convert" className="space-y-6 transition-all duration-300 ease-out">
             {/* Settings Row */}
             <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
               <div className="flex items-center gap-2">
@@ -256,7 +256,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                 <select 
                   value={decimalPlaces} 
                   onChange={(e) => setDecimalPlaces(Number(e.target.value))}
-                  className="px-2 py-1 rounded border bg-background text-sm transition-colors focus:ring-2 focus:ring-primary/30"
+                  className="px-2 py-1 rounded border bg-background text-sm transition-all duration-300 focus:ring-2 focus:ring-primary/30 hover:border-primary/50"
                 >
                   {[2, 3, 4, 5, 6].map(n => (
                     <option key={n} value={n}>{n}</option>
@@ -279,7 +279,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                   )}
                 </label>
                 <Select value={fromUnit} onValueChange={setFromUnit}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full transition-all duration-300 hover:border-primary/50 focus:border-primary">
                     <SelectValue placeholder="Select unit" />
                   </SelectTrigger>
                   <SelectContent>
@@ -295,7 +295,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                     type="number"
                     value={value.toString()}
                     onChange={handleInputChange}
-                    className={cn("mt-2 transition-colors focus:ring-2 focus:ring-primary/30", inputError && "border-red-500")}
+                    className={cn("mt-2 transition-all duration-300 focus:ring-2 focus:ring-primary/30 hover:border-primary/50", inputError && "border-red-500")}
                     placeholder="Enter value"
                   />
                   {inputError && (
@@ -309,7 +309,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                   variant="outline" 
                   size="icon" 
                   onClick={switchUnits} 
-                  className="rounded-full h-10 w-10 transition-all hover:scale-105"
+                  className="rounded-full h-10 w-10 transition-all duration-300 ease-out hover:scale-105 hover:shadow-md active:scale-95"
                   title="Swap units (or press Tab)"
                 >
                   <ArrowRightLeft className="h-4 w-4" />
@@ -329,7 +329,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                   )}
                 </label>
                 <Select value={toUnit} onValueChange={setToUnit}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full transition-all duration-300 hover:border-primary/50 focus:border-primary">
                     <SelectValue placeholder="Select unit" />
                   </SelectTrigger>
                   <SelectContent>
@@ -350,7 +350,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                     variant="ghost"
                     size="sm"
                     onClick={() => copyResult(formatResult(result))}
-                    className="ml-2 h-6 w-6 p-0 transition-all hover:scale-110"
+                    className="ml-2 h-6 w-6 p-0 transition-all duration-300 ease-out hover:scale-110 hover:bg-primary/10 active:scale-95"
                     title="Copy result"
                   >
                     <Copy className="h-3 w-3" />
@@ -368,11 +368,11 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
             </div>
           </TabsContent>
           
-          <TabsContent value="history" className="space-y-4">
+          <TabsContent value="history" className="space-y-4 transition-all duration-300 ease-out">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-medium">Recent Conversions</h3>
               {history.length > 0 && (
-                <Button variant="ghost" size="sm" onClick={clearHistory} className="transition-colors hover:bg-red-50 hover:text-red-600">
+                <Button variant="ghost" size="sm" onClick={clearHistory} className="transition-all duration-300 hover:bg-red-50 hover:text-red-600 hover:scale-105 active:scale-95">
                   Clear All
                 </Button>
               )}
@@ -386,7 +386,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
             ) : (
               <div className="space-y-2 max-h-[400px] overflow-y-auto">
                 {history.map((item, index) => (
-                  <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                  <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800/70">
                     <div className="flex-1">
                       <div className="text-sm font-medium">
                         {item.fromValue} {item.fromUnit} → {item.formattedResult} {item.toUnit}
@@ -400,7 +400,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                         variant="ghost"
                         size="sm"
                         onClick={() => copyResult(item.formattedResult)}
-                        className="h-6 w-6 p-0 transition-all hover:scale-110"
+                        className="h-6 w-6 p-0 transition-all duration-300 ease-out hover:scale-110 hover:bg-primary/10 active:scale-95"
                         title="Copy result"
                       >
                         <Copy className="h-3 w-3" />
@@ -409,7 +409,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                         variant="ghost"
                         size="sm"
                         onClick={() => clearHistoryItem(item.id)}
-                        className="h-6 w-6 p-0 transition-colors hover:text-red-600"
+                        className="h-6 w-6 p-0 transition-all duration-300 hover:text-red-600 hover:scale-110 hover:bg-red-50 active:scale-95"
                         title="Remove from history"
                       >
                         <Trash2 className="h-3 w-3" />
@@ -421,7 +421,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
             )}
           </TabsContent>
           
-          <TabsContent value="shortcuts" className="space-y-4">
+          <TabsContent value="shortcuts" className="space-y-4 transition-all duration-300 ease-out">
             <h3 className="text-lg font-medium">Quick Conversions</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {quickConversions.map((quick, index) => (
@@ -431,7 +431,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
                   size="sm"
                   onClick={() => applyQuickConversion(quick)}
                   disabled={quick.category !== category}
-                  className="text-xs transition-all hover:scale-105"
+                  className="text-xs transition-all duration-300 ease-out hover:scale-105 hover:shadow-sm active:scale-95"
                 >
                   {quick.label}
                 </Button>
@@ -451,7 +451,7 @@ const ConversionCard = ({ category, units }: ConversionCardProps) => {
       </CardContent>
       
       <CardFooter className="flex justify-end border-t border-gray-100 dark:border-gray-800 py-3">
-        <Button variant="ghost" size="sm" onClick={resetValues} className="text-xs transition-all hover:scale-105">
+        <Button variant="ghost" size="sm" onClick={resetValues} className="text-xs transition-all duration-300 ease-out hover:scale-105 hover:bg-primary/10 active:scale-95">
           <RotateCcw className="h-3 w-3 mr-1" />
           Reset
         </Button>

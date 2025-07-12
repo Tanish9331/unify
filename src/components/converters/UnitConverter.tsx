@@ -362,28 +362,28 @@ const UnitConverter: React.FC = () => {
         <div className="mb-8">
           <Tabs defaultValue="common" value={selectedTab} onValueChange={setSelectedTab} className="w-full">
             <div className="relative overflow-hidden mb-2">
-              <TabsList className="w-full justify-start overflow-x-auto pb-2 flex gap-2 bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg h-auto">
+              <TabsList className="w-full justify-start overflow-x-auto pb-2 flex gap-2 bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg h-auto transition-all duration-300">
                 <TabsTrigger 
                   value="common"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300 ease-out hover:bg-primary/10 data-[state=active]:shadow-sm"
                 >
                   Common
                 </TabsTrigger>
                 <TabsTrigger 
                   value="engineering"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300 ease-out hover:bg-primary/10 data-[state=active]:shadow-sm"
                 >
                   Engineering
                 </TabsTrigger>
                 <TabsTrigger 
                   value="digital"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300 ease-out hover:bg-primary/10 data-[state=active]:shadow-sm"
                 >
                   Digital
                 </TabsTrigger>
                 <TabsTrigger 
                   value="lifestyle"
-                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                  className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300 ease-out hover:bg-primary/10 data-[state=active]:shadow-sm"
                 >
                   Lifestyle
                 </TabsTrigger>
@@ -392,7 +392,7 @@ const UnitConverter: React.FC = () => {
             </div>
 
             {Object.keys(conversionCategories).map((category) => (
-              <TabsContent key={category} value={category} className="mt-4">
+              <TabsContent key={category} value={category} className="mt-4 transition-all duration-300 ease-out">
                 <div 
                   className="flex flex-wrap gap-2"
                 >
@@ -401,10 +401,10 @@ const UnitConverter: React.FC = () => {
                       key={item.type}
                       onClick={() => handleTypeChange(item.type)}
                       className={cn(
-                        "flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all",
+                        "flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all duration-300 ease-out transform hover:scale-[1.02] active:scale-[0.98]",
                         selectedType === item.type 
-                          ? "bg-primary text-primary-foreground" 
-                          : "bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg text-secondary-foreground hover:bg-white/90 dark:hover:bg-gray-900/90"
+                          ? "bg-primary text-primary-foreground shadow-md" 
+                          : "bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg text-secondary-foreground hover:bg-white/90 dark:hover:bg-gray-900/90 hover:shadow-sm"
                       )}
                     >
                       {conversionIcons[item.type] || <Calculator size={18} />}
@@ -459,57 +459,6 @@ const UnitConverter: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="mt-20 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-xl p-8 border border-white/20 dark:border-white/10">
-          <div className="text-center mb-6">
-            <h3 className="text-2xl font-display font-medium mb-2">Enhanced Features</h3>
-            <p className="text-muted-foreground">
-              Discover all the powerful features that make conversion effortless
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="text-center p-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Settings className="text-primary" size={24} />
-              </div>
-              <h4 className="text-lg font-medium mb-2">Customizable</h4>
-              <p className="text-muted-foreground text-sm">
-                Adjust decimal places, save preferences, and personalize your experience
-              </p>
-            </div>
-            
-            <div className="text-center p-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="text-primary" size={24} />
-              </div>
-              <h4 className="text-lg font-medium mb-2">History Tracking</h4>
-              <p className="text-muted-foreground text-sm">
-                Keep track of your recent conversions with timestamps and easy copying
-              </p>
-            </div>
-            
-            <div className="text-center p-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="text-primary" size={24} />
-              </div>
-              <h4 className="text-lg font-medium mb-2">Quick Shortcuts</h4>
-              <p className="text-muted-foreground text-sm">
-                Access common conversions instantly with keyboard shortcuts
-              </p>
-            </div>
-            
-            <div className="text-center p-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Info className="text-primary" size={24} />
-              </div>
-              <h4 className="text-lg font-medium mb-2">Educational</h4>
-              <p className="text-muted-foreground text-sm">
-                Learn about units with helpful tooltips and descriptions
-              </p>
             </div>
           </div>
         </div>

@@ -51,13 +51,13 @@ const Hero: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 mb-16">
           <a 
             href="#converter" 
-            className="px-6 py-3 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-medium transition-all hover:scale-105 hover:shadow-lg"
+            className="px-6 py-3 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-medium transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg active:scale-95"
           >
             Start Converting
           </a>
           <a 
             href="#about" 
-            className="px-6 py-3 rounded-lg bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg text-foreground font-medium transition-all hover:scale-105"
+            className="px-6 py-3 rounded-lg bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg text-foreground font-medium transition-all duration-300 ease-out hover:scale-105 active:scale-95"
           >
             Learn More
           </a>
@@ -65,7 +65,7 @@ const Hero: React.FC = () => {
       </div>
       
       <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <a href="#converter" className="flex flex-col items-center text-foreground hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
+        <a href="#converter" className="flex flex-col items-center text-foreground hover:text-sky-500 dark:hover:text-sky-400 transition-all duration-300">
           <span className="text-sm mb-2">Scroll Down</span>
           <ArrowDown size={20} className="text-sky-500 dark:text-sky-400 animate-pulse" />
         </a>

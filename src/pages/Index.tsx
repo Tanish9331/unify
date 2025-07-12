@@ -120,7 +120,7 @@ const Index = () => {
             </p>
             <a 
               href="#converter" 
-              className="inline-block px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors btn-animate hover-lift magnetic ripple"
+              className="inline-block px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all duration-300 ease-out hover:scale-105 active:scale-95"
             >
               Try the Converter
             </a>
